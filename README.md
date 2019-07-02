@@ -1,2 +1,0 @@
-# wsie
-Learning MERN 
