@@ -1,0 +1,13 @@
+.SearchBar{
+    height: 2em;
+    line-height: 500px;
+    width: 40em;
+    
+}
+.SearchBar span{
+    background-color: red;
+}
+
+.SearchBar input:focus{
+    outline:red;
+}
