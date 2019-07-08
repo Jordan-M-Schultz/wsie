@@ -6,28 +6,34 @@ class SearchBar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            searchText:  ''
+            searchText:  '',
+            returnedText: '',
+            returnObj: {}
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this); //this.handleChange is bound to this to call later
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(event){
         this.setState({searchText: event.target.value});
     }
+    handleSubmit(event){
+        fetch(`/search?zip=${this.state.searchText}`)
+        .then(response => response.json())
+        // .then(data => this.setState({returnObj:data}));
+        .then(data => console.log(data));
+        event.preventDefault();
+    }
+
     render(){
         return(
             <div className = 'SearchBar'>
-                <div className ='input-group md-form form-sm'>
-                    <div className='input-group-prepend'>
-                        <span className=' input-group-text'>
-                            <i className='fas fa-search text-white'></i>
-                        </span>
-                    </div>
+                <form className='SearchBar' onSubmit={this.handleSubmit}>
+                    <button><i className="fas fa-search"></i></button>
                     <input 
                         type="text" className="form-control " placeholder="Search..." 
                         value = {this.state.searchText} onChange={this.handleChange}
-                    />
-                </div>
-                <p>{this.state.searchText}</p>
+                    />    
+                </form>
             </div>
         );
     }
