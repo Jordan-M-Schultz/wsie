@@ -1,13 +1,26 @@
 .SearchBar{
     height: 2em;
-    line-height: 500px;
     width: 40em;
-    
 }
-.SearchBar span{
+.SearchBar button{
     background-color: red;
+    width: 10%;
+    height:inherit;
+    display: inline;
+    border-radius: 10px 0px 0px 10px;
+}
+.SearchBar input{
+    width: 90%;
+    display: inline;
+    height: inherit;
+    border-radius: 0px 10px 10px 0px;
+
+}
+.SearchBar input:focus{
+    outline:none;
 }
 
-.SearchBar input:focus{
-    outline:red;
+
+*:focus {
+    outline: none;
 }
