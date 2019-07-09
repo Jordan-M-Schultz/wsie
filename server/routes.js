@@ -10,29 +10,24 @@ router.use(function timeLog(req, res, next) {
 
 // Define routing here
 
-router.get('/api/greeting', (req, res) => {
-    const name = req.query.name || 'World';
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
-});
-
 router.get('/search', (req,res)=>{
     // res.setHeader('Content-Type', 'application/json');
-    const zip = req.query.zip;
+    const type = req.query.term;
+    const location = req.query.location;
     const options = {
-        url : 'https://api.yelp.com/v3/businesses/search?location=94087',
+        url : `https://api.yelp.com/v3/businesses/search?location=${location}&term=${type}`,
         headers : {
             'Authorization': `Bearer ${process.env.YELP_API_KEY}`
         }
     }
-    function callback(error, response, body) {
+    var callback = (error, response, body) => {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
             let min = 0;
             let max = info.businesses.length;
             const random = Math.floor(Math.random()*(max-min+1)+min);
-
-            res.send(JSON.stringify({ returnedText: info.businesses[random] }));
+            console.log(info.businesses);
+            res.send(JSON.stringify(info.businesses[random]));
         }
       }
     request(options, callback)
