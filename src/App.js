@@ -8,57 +8,80 @@ class App extends Component {
     super(props); //class constructors must call super in ES6 if they are a subclass
     this.state = {
       name: '',
-      greeting: ''
+      greeting: '',
+      restaurant: {
+      }
+      
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    
   }
 
-  handleChange(event) {
-    this.setState({ name: event.target.value });
-    console.log(this.state);
+  handleResult = (data) => {
+    this.setState({restaurant:data});
+    console.log(data);
+   
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    // fetch(`/api/greeting?name=${encodeURIComponent(this.state.name)}`)
-    //   .then(response => response.json())
-    //   .then(state => this.setState(state));
-    fetch(`/api?name=${encodeURIComponent(this.state.name)}`)
-      .then(response => response.json())
-      .then(state => this.setState(state));
-  }
 
   render() {
-    return(
-      <div className='App'>
-        <div className='header'>
-          <h1>Header Here</h1>
+    if(Object.entries(this.state.restaurant).length === 0 && this.state.restaurant.constructor === Object)
+      return(
+        <div className='App'>
+          <div className='header'>
+            <h1>What Should I Eat?</h1>
+          </div>
+          <div className='wrap-center'>
+            <SearchBar handleResult={this.handleResult}/>
+          </div>
         </div>
-        <div className='wrap-center'>
-          <SearchBar/>
+      );
+    else{
+      const displayAddress = (this.state.restaurant.location.display_address).map((field, index) =>
+        <h5 key={index}>{field}</h5>
+      );
+      return(
+        
+        <div className='App'>
+          <div className='header'>
+            
+          </div>
+          <div className='wrap-center-top'>
+              <SearchBar handleResult={this.handleResult}/>
+              <h5>WSIE?</h5>
+          </div>
+          <div className='wrap-center-entry'>
+            <div className = 'row'>
+              <div className = 'col-lg-12'>
+                <p className='header-detail mb-0'>Name</p>
+                <h3>{this.state.restaurant.name}</h3>
+              </div>
+            </div>
+            <div className = 'row'>
+              <div className = 'col-lg-6'>
+                
+                <p className='header-detail mb-0'>Phone #</p>
+                <h5>{this.state.restaurant.display_phone}</h5>
+                <p className='header-detail mb-0'>Location</p>
+                {displayAddress}
+              </div>
+              <div className = 'col-lg-6'>
+                <p className='header-detail mb-0'>Rating</p>
+                <h5>{this.state.restaurant.rating}</h5>
+                <p className='header-detail mb-0'>Review Count</p>
+                <h5>{this.state.restaurant.review_count}</h5>
+                <p className='header-detail mb-0'>Price</p>
+                <h5>{this.state.restaurant.price}</h5>      
+                <p className='header-detail mb-0'>Yelp Link</p>
+                <a href={this.state.restaurant.url}>Go</a>      
+              </div>
+            </div>
+            <img alt='business' className='entry-img' src={this.state.restaurant.image_url}/>
+          </div>
+          
+          
         </div>
-      </div>
-      
-    );
-    // return (
-    //   <div className="App">
-    //     <header className="App-header">
-    //       <form onSubmit={this.handleSubmit}>
-    //         <label htmlFor="name">Enter your name: </label>
-    //         <input
-    //           id="name"
-    //           type="text"
-    //           value={this.state.name}
-    //           onChange={this.handleChange}
-    //         />
-    //         <button type="submit">Submit</button>
-    //       </form>
-    //       <p>{this.state.greeting}</p>
-    //       <SearchBar/>
-    //     </header>
-    //   </div>
-    // );
+      );
+    }
   }
 }
 export default App;
