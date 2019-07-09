@@ -7,13 +7,15 @@
     width: 10%;
     height:inherit;
     display: inline;
-    border-radius: 10px 0px 0px 10px;
+    color:white;
+    /* border-radius: 10px 0px 0px 10px; */
 }
 .SearchBar input{
-    width: 90%;
+    width: 45%;
     display: inline;
     height: inherit;
-    border-radius: 0px 10px 10px 0px;
+    /* border-radius: 0px 10px 10px 0px; */
+    /* border-radius: 0 0 0 0; */
 
 }
 .SearchBar input:focus{
@@ -23,4 +25,9 @@
 
 *:focus {
     outline: none;
+}
+
+.error {
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
 }
