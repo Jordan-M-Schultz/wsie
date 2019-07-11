@@ -8,21 +8,36 @@ class SearchBar extends Component{
         this.state = {
             restaurantType:  '',
             location: '',
-            error: false
+            restaurantArray: [],
+            error: false,
+            searchDidChange: false
         }
         // this.handleChange = this.handleChange.bind(this); //this.handleChange is bound to this to call later
     }
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value});
+        this.setState({searchDidChange:true});
+        
     }
     handleSubmit = (event) => {
-        if(!this.state.restaurantType || !this.state.location){
-            this.setState({error:true});
-        }else{
-            fetch(`/search?term=${this.state.restaurantType}&location=${this.state.location}`)
-            .then(response => response.json())
-            .then(data => this.props.handleResult(data));
+        if(this.state.searchDidChange){ //If the user has never searched before
+            if(!this.state.restaurantType || !this.state.location){
+                this.setState({error:true});
+            }else{
+                fetch(`/search?term=${this.state.restaurantType}&location=${this.state.location}`)
+                .then(response => response.json())
+                .then(function(data){
+                    console.log(data);
+                    this.setState({restaurantArray:data});
+                    this.props.handleRestaurantData(data);
+                });
+                // .then(data => this.props.handleRestaurantData(data));
+            }
+            this.setState({searchDidChange:false});
+        }else{ //user didnt change criteria, select another 
+            console.log("fail");
         }
+        
         event.preventDefault();
     }
     

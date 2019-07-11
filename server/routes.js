@@ -23,13 +23,15 @@ router.get('/search', (req,res)=>{
     var callback = (error, response, body) => {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            let min = 0;
-            let max = info.businesses.length;
-            const random = Math.floor(Math.random()*(max-min+1)+min);
-            console.log(info.businesses);
-            res.send(JSON.stringify(info.businesses[random]));
+            // console.log(info);
+            // let min = 0;
+            // let max = info.businesses.length;
+            // const random = Math.floor(Math.random()*(max-min+1)+min);
+            // res.send(body);
+            res.send(JSON.stringify(info.businesses));
         }
-      }
+    }
+
     request(options, callback)
     
 
