@@ -14,8 +14,14 @@ router.get('/search', (req,res)=>{
     // res.setHeader('Content-Type', 'application/json');
     const type = req.query.term;
     const location = req.query.location;
+    const price = req.query.price
+    var reqURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=${type}`
+    
+    if(price)
+        reqURL += `&price=${price}`
+    
     const options = {
-        url : `https://api.yelp.com/v3/businesses/search?location=${location}&term=${type}`,
+        url : reqURL,
         headers : {
             'Authorization': `Bearer ${process.env.YELP_API_KEY}`
         }
@@ -23,12 +29,13 @@ router.get('/search', (req,res)=>{
     var callback = (error, response, body) => {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            // console.log(info);
-            // let min = 0;
-            // let max = info.businesses.length;
-            // const random = Math.floor(Math.random()*(max-min+1)+min);
-            // res.send(body);
-            res.send(JSON.stringify(info.businesses));
+            let min = 0;
+            let max = info.businesses.length;
+            const random = Math.floor(Math.random()*(max-min+1)+min);
+            // for(var i = 0 ; i<info.businesses.length; i++)
+            //     console.log(info.businesses[i].price);
+            res.send(JSON.stringify(info.businesses[random]));
+            // res.send(JSON.stringify(info.businesses));
         }
     }
 
