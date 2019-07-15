@@ -10,6 +10,12 @@
     color:white;
     /* border-radius: 10px 0px 0px 10px; */
 }
+
+.SearchBar .filterBtn{
+    width: 35px;
+    border:none;
+}
+
 .SearchBar input{
     width: 45%;
     display: inline;
@@ -30,4 +36,8 @@
 .error {
     border-top: 1px solid red;
     border-bottom: 1px solid red;
+}
+
+#filter{
+    margin-top: 15px;
 }
