@@ -14,6 +14,7 @@ class App extends Component {
     };
   }
 
+  //called from handleSubmit in SearchBar
   handleRestaurantData = (data) => {
     if(data){
       this.setState({restaurant:data});
@@ -25,23 +26,34 @@ class App extends Component {
   
   render() {
     if(this.state.displayError){
-      console.log('implement'); 
+      return(
+        <div className="Content-wrapper">
+          <div className='wrap-center-top'>
+            <SearchBar handleRestaurantData={this.handleRestaurantData}/>
+          </div>
+          <div className='wrap-center-entry'>
+            <Entry restaurantData={null}/>
+          </div>
+          <div className='footer'>
+          </div>
+        </div>
+      );
     }else{
-      if(Object.entries(this.state.restaurant).length === 0 && this.state.restaurant.constructor === Object){
+      if(Object.entries(this.state.restaurant).length === 0 && this.state.restaurant.constructor === Object){ //if user hasn't typed anything
         return(
-          <div className='App'>
-            <div className='header'>
+          <div className='Content-wrapper'>
+            <div className='logoContent'>
               <h1>What Should I Eat?</h1>
             </div>
             <div className='wrap-center'>
               <SearchBar handleRestaurantData={this.handleRestaurantData}/>
             </div>
+            <div className='footer'>
+              <p>Contact</p>
+            </div>
           </div>
         );
       }else{
-        // const displayAddress = (this.state.restaurant.location.display_address)
-        //   .map((field, index) => <h5 key={index}>{field}</h5> );
-        console.log('first');
         return(
           <div className='Content-wrapper'>
             <div className='header'>
@@ -52,6 +64,9 @@ class App extends Component {
             </div>
             <div className='wrap-center-entry'>
               <Entry restaurantData={this.state.restaurant}/>
+            </div>
+            <div className='footer'>
+              <h1>I am here</h1>
             </div>
           </div>
         );
