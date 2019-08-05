@@ -17,7 +17,7 @@
 }
 
 .SearchBar input{
-    width: 45%;
+    /* width: 45%; */
     display: inline;
     height: inherit;
     /* border-radius: 0px 10px 10px 0px; */
