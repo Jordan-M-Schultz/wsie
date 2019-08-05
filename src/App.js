@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import './App.css';
 import './SearchBar';
+
 import SearchBar from './SearchBar';
 import Entry from './Entry';
+import Footer from './Footer';
 
 class App extends Component {
   constructor(props) {
@@ -17,8 +19,10 @@ class App extends Component {
   //called from handleSubmit in SearchBar
   handleRestaurantData = (data) => {
     if(data){
-      this.setState({restaurant:data});
-      this.setState({displayError: false});
+      this.setState({
+        restaurant: data,
+        displayError: false
+      });
     }else{
       this.setState({displayError: true});
     }
@@ -48,9 +52,11 @@ class App extends Component {
             <div className='wrap-center'>
               <SearchBar handleRestaurantData={this.handleRestaurantData}/>
             </div>
-            <div className='footer'>
-              <p>Contact</p>
-            </div>
+            <Footer/>
+
+
+            
+
           </div>
         );
       }else{
@@ -67,6 +73,7 @@ class App extends Component {
             </div>
             <div className='footer'>
               <h1>I am here</h1>
+              
             </div>
           </div>
         );
