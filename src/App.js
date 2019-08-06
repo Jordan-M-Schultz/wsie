@@ -71,10 +71,7 @@ class App extends Component {
             <div className='wrap-center-entry'>
               <Entry restaurantData={this.state.restaurant}/>
             </div>
-            <div className='footer'>
-              <h1>I am here</h1>
-              
-            </div>
+            <Footer/>
           </div>
         );
       }
