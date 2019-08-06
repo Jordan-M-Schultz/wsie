@@ -1,0 +1,49 @@
+
+.entry{
+    height:100%;
+    width: 75%;
+    position:absolute;
+    /* top: 15%; */
+    left: 50%;
+    transform: translate(-50%, 0%);
+    border:solid;
+}
+
+.entry-img{
+    /* max-height: 120%; */
+    max-height: 100%;
+    transform: translate(0,-10%);
+}
+
+/* .entry .row{
+    height:300px;
+} */
+/* .entry{
+    height:300px;
+} */
+.entry .row{
+    height: 100%;
+}
+
+[class*="col-"] {
+    height: 100%;
+}
+
+.yelpLogo{
+    position: absolute;
+    top:100%;
+    z-index: -1;
+    /* max-width: 100px; */
+    float:left;
+}
+.yelpLogo img{
+    z-index: -1;
+    position: absolute;
+    max-width: 100px;
+}
+
+.entry .name{
+    margin-bottom: 10px;
+    height:50px;
+    background-color: lightblue;
+}
