@@ -20,7 +20,7 @@ router.get('/search', (req,res)=>{
     const openNow = req.query.open_now;
     const attributes = req.query.attributes;
 
-    var reqURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=${type}`
+    var reqURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=${type}&limit=50`
     
     if(price)
         reqURL += `&price=${price}`
@@ -39,7 +39,7 @@ router.get('/search', (req,res)=>{
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
             let min = 0;
-            let max = info.businesses.length;
+            let max = info.businesses.length - 1;
             const random = Math.floor(Math.random()*(max-min+1)+min);
             res.send(JSON.stringify(info.businesses[random]));
         }else{
