@@ -12,21 +12,9 @@ class Footer extends Component{
     render(){
         return(
             <footer className="page-footer font-small mdb-color pt-4">
-              <div className="container text-center text-md-left">
                 <div className="row d-flex align-items-center">
-                  
-                  <div className="col-md-7 col-lg-8">
-                    <p className="text-center text-md-left">Help from:
-                      <ul>
-                        <li>a</li>
-                        <li>a</li>
-
-                      </ul>
-                    </p>
-                  </div>
-
-                  <div className="col-md-5 col-lg-4 ml-lg-0">
-                    <div className="text-center text-md-right">
+                  <div className="col-lg-12">
+                    <div className="text-center ">
                       <ul className="list-unstyled list-inline">
                         <li className="list-inline-item">
                           <a href='https://github.com/Jordan-M-Schultz'>
@@ -36,9 +24,6 @@ class Footer extends Component{
                       </ul>
                     </div>
                   </div>
-
-                </div>
-
               </div>
 
             </footer>
