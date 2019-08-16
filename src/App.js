@@ -53,17 +53,13 @@ class App extends Component {
               <SearchBar handleRestaurantData={this.handleRestaurantData}/>
             </div>
             <Footer/>
-
-
-            
-
           </div>
         );
       }else{
+
+
         return(
           <div className='Content-wrapper'>
-            <div className='header'>
-            </div>
             <div className='wrap-center-top'>
                 <SearchBar handleRestaurantData={this.handleRestaurantData}/>
                 {/* <h5>WSIE?</h5> */}
