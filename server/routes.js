@@ -13,73 +13,53 @@ router.use(function timeLog(req, res, next) {
 // Define routing here
 
 router.get('/search', (req,res)=>{
-    // res.setHeader('Content-Type', 'application/json');
-    const type = req.query.term;
-    const location = req.query.location;
-    const price = req.query.price;
-    const openNow = req.query.open_now;
-    const attributes = req.query.attributes;
+    var reqURL = process.env.YELP_REQUEST_URL + `?location=${req.query.location}&limit=50` 
 
-    var reqURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=${type}&limit=50`
+    //Iterate and generate url based on parameters
+    for(var param in req.query)
+        if(param === 'location')
+            continue 
+        else
+            reqURL += `&${param}=${req.query[param]}`
     
-    if(price)
-        reqURL += `&price=${price}`
-    if(openNow)
-        reqURL += `&open_now=${openNow}`
-    if(attributes)
-        reqURL += `&attributes=${attributes}`
-
     var options = {
         url : reqURL,
         headers : {
             'Authorization': `Bearer ${process.env.YELP_API_KEY}`
         }
     }
-    // var callback = (error, response, body) => {
-    //     if (!error && response.statusCode == 200) {
-    //         const info = JSON.parse(body);
-    //         let min = 0;
-    //         let max = info.businesses.length - 1;
-    //         const random = Math.floor(Math.random()*(max-min+1)+min);
-    //         // const retObj = {
-    //         //     businessInfo : info.businesses[random],
-    //         //     reviews : 
-    //         // }
-    //         res.send(JSON.stringify(info.businesses[random]));
-    //     }else{
-    //         //current catchall for errors
-    //         res.statusCode = 400;
-    //         res.send('Error, bad request');
-    //     }
-    // }
-
-    // request(options, callback)
     
 
     const getData = async () => {
         try {
             const restaurantList = await doRequest(options); //fetch of all 50 restaurants given search criteria
-            if(!restaurantList || restaurantList.businesses.length === 0){
-                throw "No restaurants Found given criteria"
-            }
             
+            if(!restaurantList || restaurantList.businesses.length === 0)
+                throw "No restaurants Found given criteria"
 
+            //choose random restaurant to return
             let min = 0;
-            let max = restaurantList.businesses.length;
+            let max = restaurantList.businesses.length - 1;
             let random = Math.floor(Math.random()*(max-min+1)+min);
+
             options.url = `https://api.yelp.com/v3/businesses/${restaurantList.businesses[random].id}/reviews`;
             
-            const restaurantData = await doRequest(options); //fetch reviews given specific ID
+            //fetch reviews given specific ID
+            const restaurantData = await doRequest(options); 
             let payload = restaurantList.businesses[random];
             payload = Object.assign(payload, restaurantData);
-            console.log('shouldnt');
+            // console.log(payload)
+            // console.log(payload['reviews'][0].user)
+            
             res.send(JSON.stringify(payload))
+
         } catch (err) {
             console.log(err)
             res.status(400).json({ err: err.toString() });
             // res.status(404).send('bad')
         }
       }
+
     getData();
 });
 
@@ -92,7 +72,7 @@ router.get('/api', (req, res) => {
 const doRequest = (options) => {
     return new Promise(function (resolve, reject) {
         request(options, function (error, res, body) {
-          if (!error && res.statusCode == 200) { //if null & promise returned 
+          if (!error && res.statusCode === 200) { //if null & promise returned 
             resolve(JSON.parse(body));
           } else {
             console.log(res.statusCode); 
