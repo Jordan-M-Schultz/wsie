@@ -41,6 +41,8 @@ class Entry extends Component{
         if(this.props.restaurantData){
             const displayAddress = (this.props.restaurantData.location.display_address)
             .map((field, index) => <h6 key={index}>{field}</h6> );
+            
+            const userReviews = this.props.restaurantData.reviews.map(x => <li key={x.user.name}>{x.user.name}</li>);
             return(
             <div className='entry'>
                 <div className = 'name'>
@@ -55,12 +57,18 @@ class Entry extends Component{
                         <h6>{this.props.restaurantData.display_phone ? this.props.restaurantData.display_phone: ''}</h6>
                         <p className='header-detail mb-0'>Location</p>
                         {displayAddress}
+                        <a className = 'yelpLogo' href = 'http://www.yelp.com'>
+                            <img  src = {YELP_LOGO} />
+                        </a>
+                        
+                        
+                        
+                        
                         
                     </div>
                     <div className = 'col-lg-4'>
                             {this.getStars(this.props.restaurantData.rating)}
                             <small><p className='header-detail mb-0'>Based on {this.props.restaurantData.review_count} reviews</p></small>
-                            {/* <h5>{this.props.restaurantData.review_count}</h5> */}
                             <br></br>
                             
                             <p className='header-detail mb-0'>Price</p>
@@ -71,14 +79,10 @@ class Entry extends Component{
                     <div className = 'col-lg-4'>
                         <img alt='business' className='entry-img' src={this.props.restaurantData.image_url}/>
                     </div>
-                    
                 </div>
-                <div className='logo'>
-                    <div className = 'col-lg-12'>
-                        <a className='yelpLogo' href={this.props.restaurantData.url}>
-                            <img alt='yelpLogo' src={YELP_LOGO}></img>    
-                        </a>      
-                    </div>
+                
+                <div>
+                    {userReviews}
                 </div>
             </div>
             );
@@ -93,7 +97,7 @@ class Entry extends Component{
                         </div>
                         <div className='col-lg-4'>
                             <p className='header-detail mb-0'></p>
-                            <img className='entry-img' src='https://via.placeholder.com/350x250.png?text=No+image+available'></img>
+                            <img alt='placeholder' className='entry-img' src='https://via.placeholder.com/350x250.png?text=No+image+available'></img>
                         </div>
                     </div>
                     
