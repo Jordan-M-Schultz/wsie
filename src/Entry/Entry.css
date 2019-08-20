@@ -32,12 +32,11 @@
 
 .yelpLogo{
     top:100%;
-    z-index: -1;
+    z-index: 1;
     /* max-width: 100px; */
     float:left;
 }
 .yelpLogo img{
-    z-index: -1;
     position: absolute;
     max-width: 100px;
 }
@@ -46,4 +45,9 @@
     margin-bottom: 10px;
     height:50px;
     background-color: lightblue;
+}
+
+
+.review{
+    border: solid 1px;
 }
