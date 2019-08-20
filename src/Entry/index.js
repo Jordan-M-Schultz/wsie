@@ -10,39 +10,14 @@ class Entry extends Component{
         super(props);
     }
 
-    getStars(rating){
-        switch(parseFloat(rating)){
-            case 0: 
-                return(<img alt='yelp icon' src={starArray[0]}></img>);
-            case 1:
-                return(<img alt='yelp icon' src={starArray[1]}></img>);
-            case 1.5:  
-                return(<img alt='yelp icon' src={starArray[2]}></img>);
-            case 2:
-                return(<img alt='yelp icon' src={starArray[3]}></img>);
-            case 2.5:
-                return(<img alt='yelp icon' src={starArray[4]}></img>);
-            case 3: 
-                return(<img alt='yelp icon' src={starArray[5]}></img>);
-            case 3.5: 
-                return(<img alt='yelp icon' src={starArray[6]}></img>);
-            case 4: 
-                return(<img alt='yelp icon' src={starArray[7]}></img>);
-            case 4.5:
-                return(<img alt='yelp icon' src={starArray[8]}></img>);
-            case 5: 
-                return(<img alt='yelp icon' src={starArray[9]}></img>);
-            default:
-                break;
-        }
-    }
-
     render(){
         if(this.props.restaurantData){
+            console.log(this.props.restaurantData);
             const displayAddress = (this.props.restaurantData.location.display_address)
-            .map((field, index) => <h6 key={index}>{field}</h6> );
+                .map((field, index) => <h6 key={index}>{field}</h6> );
+            // console.log(this.props.restaurantData.reviews);
+            // const userReviews = this.genUserReviews();
             
-            const userReviews = this.props.restaurantData.reviews.map(x => <li key={x.user.name}>{x.user.name}</li>);
             return(
             <div className='entry'>
                 <div className = 'name'>
@@ -57,8 +32,8 @@ class Entry extends Component{
                         <h6>{this.props.restaurantData.display_phone ? this.props.restaurantData.display_phone: ''}</h6>
                         <p className='header-detail mb-0'>Location</p>
                         {displayAddress}
-                        <a className = 'yelpLogo' href = 'http://www.yelp.com'>
-                            <img  src = {YELP_LOGO} />
+                        <a className = 'yelpLogo' href = {this.props.restaurantData.url} target="_blank" rel="noopener noreferrer">
+                            <img alt = 'yelp_logo' src = {YELP_LOGO} />
                         </a>
                         
                         
@@ -67,7 +42,7 @@ class Entry extends Component{
                         
                     </div>
                     <div className = 'col-lg-4'>
-                            {this.getStars(this.props.restaurantData.rating)}
+                            {this.props.getStars(this.props.restaurantData.rating)}
                             <small><p className='header-detail mb-0'>Based on {this.props.restaurantData.review_count} reviews</p></small>
                             <br></br>
                             
@@ -79,10 +54,6 @@ class Entry extends Component{
                     <div className = 'col-lg-4'>
                         <img alt='business' className='entry-img' src={this.props.restaurantData.image_url}/>
                     </div>
-                </div>
-                
-                <div>
-                    {userReviews}
                 </div>
             </div>
             );
