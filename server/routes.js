@@ -41,16 +41,19 @@ router.get('/search', (req,res)=>{
             let min = 0;
             let max = restaurantList.businesses.length - 1;
             let random = Math.floor(Math.random()*(max-min+1)+min);
+            let payload = restaurantList.businesses[random];
 
             options.url = `https://api.yelp.com/v3/businesses/${restaurantList.businesses[random].id}/reviews`;
             
             //fetch reviews given specific ID
-            const restaurantData = await doRequest(options); 
-            let payload = restaurantList.businesses[random];
-            payload = Object.assign(payload, restaurantData);
-            // console.log(payload)
-            // console.log(payload['reviews'][0].user)
+            const reviews = await doRequest(options); 
+            options.url = `https://api.yelp.com/v3/businesses/${restaurantList.businesses[random].id}`;
             
+            //fetch detail information, pictures, open times, etc
+            const businessDetail = await doRequest(options); 
+            
+            payload = Object.assign(payload, reviews);
+            payload = Object.assign(payload, businessDetail);
             res.send(JSON.stringify(payload))
 
         } catch (err) {
