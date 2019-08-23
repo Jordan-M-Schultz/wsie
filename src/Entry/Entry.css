@@ -12,6 +12,9 @@
 .entry-img{
     /* max-height: 120%; */
     max-height: 100%;
+    max-width: 33%;
+    height: auto;
+    width: auto;
     transform: translate(0,-10%);
 }
 

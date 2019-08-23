@@ -1,7 +1,7 @@
 footer{
     /* background-color:lightgray; */
     height:120px;
-    position: fixed;
+    position: absolute;
     bottom:0;
 
 }
