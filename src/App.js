@@ -87,7 +87,6 @@ class App extends Component {
         );
       }else{ //everything went alright, display regular view
         var userReviews = this.genUserReviews();
-        console.log(userReviews);
         return(
           <div className='Content-wrapper'>
             <div className='wrap-center-top'>
@@ -98,10 +97,13 @@ class App extends Component {
               <Entry getStars={this.getStars} restaurantData={this.state.restaurant}/>
               
             </div>
+            <div className='sidebar'>
+              <p>nice</p>
+            </div>
             <div className='wrap-center-reviews'>
               {userReviews}
             </div>
-            <Footer/>
+            {/* <Footer/> */}
           </div>
         );
       }
