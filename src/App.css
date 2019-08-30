@@ -33,6 +33,11 @@ footer{
   font-weight: bold;
   text-transform: uppercase;
 }
+.sidebar{
+  top: 500px;
+  position: absolute;
+  height:500px;
+}
 .wrap-center{
     position: absolute;
     top: 50%;
