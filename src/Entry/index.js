@@ -27,7 +27,7 @@ class Entry extends Component{
                     </div>
                 </div>
                 <div className = 'row'>
-                    <div className = 'col-lg-3'>
+                    {/* <div className = 'col-lg-2'>
                         <p className='header-detail mb-0'>Phone #</p>
                         <h6>{this.props.restaurantData.display_phone ? this.props.restaurantData.display_phone: ''}</h6>
                         <p className='header-detail mb-0'>Location</p>
@@ -36,23 +36,24 @@ class Entry extends Component{
                             <img alt = 'yelp_logo' src = {YELP_LOGO} />
                         </a>
                         
-                        
-                        
-                        
-                        
-                    </div>
-                    <div className = 'col-lg-4'>
+                    </div> */}
+                    <div className = 'col-lg-3'>
                             {this.props.getStars(this.props.restaurantData.rating)}
                             <small><p className='header-detail mb-0'>Based on {this.props.restaurantData.review_count} reviews</p></small>
                             <br></br>
                             
                             <p className='header-detail mb-0'>Price</p>
-                            <h6>{this.props.restaurantData.price}</h6>      
+                            <h6>{this.props.restaurantData.price}</h6>  
+                            <a className = 'yelpLogo' href = {this.props.restaurantData.url} target="_blank" rel="noopener noreferrer">
+                                <img alt = 'yelp_logo' src = {YELP_LOGO} />
+                            </a>    
                             
                             
                     </div>
-                    <div className = 'col-lg-4'>
-                        <img alt='business' className='entry-img' src={this.props.restaurantData.image_url}/>
+                    <div className = 'col-lg-9'>
+                        <img alt='business' className='entry-img d-inline-block m-1' src={this.props.restaurantData.photos[0]}/>
+                        <img alt='business' className='entry-img d-inline-block m-1' src={this.props.restaurantData.photos[1]}/>
+                        <img alt='business' className='entry-img d-inline-block m-1' src={this.props.restaurantData.photos[2]}/>
                     </div>
                 </div>
             </div>
