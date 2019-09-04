@@ -3,9 +3,9 @@ import React, {Component} from 'react';
 import './Review.css';
 
 class Review extends Component{
-    constructor(props){
-        super(props);
-    }
+    // constructor(props){
+    //     super(props);
+    // }
     
     render(){
         // var test = (this.props.review.user.profile_url) ? this.props.review.user.profil_url : 'https://via.placeholder.com/350x250.png?text=No+image+available'
