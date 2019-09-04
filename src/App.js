@@ -18,8 +18,11 @@ class App extends Component {
     };
   }
 
-  //called from handleSubmit in SearchBar
-  handleRestaurantData = (data) => {
+  /*
+    Function expressions to avoid polution of the global namespace
+  */
+
+  handleRestaurantData = (data) => { //called from handleSubmit in SearchBar 
     if(data){
       this.setState({
         restaurant: data,
@@ -30,7 +33,7 @@ class App extends Component {
     }
   } 
 
-  getStars(rating){
+  getStars = (rating) => {
     switch(parseFloat(rating)){
         case 0: 
             return(<img alt='yelp icon' src={starArray[0]}></img>);
@@ -58,7 +61,71 @@ class App extends Component {
   }
   genUserReviews = () => this.state.restaurant.reviews.map((x,index) => <Review key={`review${index}`} getStars={this.getStars} review={x}/>)
   
+  formatDate = (dateObj) => {
+    var ret = [];
+    var trackDay = 0;
+    var string = "";
+    for(let i = 0 ; i < dateObj.length; i++){ //indicies will always be 0-6
+      
+      if(dateObj[i].day !== trackDay){ //if day is new
+        switch(dateObj[i].day){
+          case(0):
+            ret.push(<p key='Monday' className='mb-0'>Monday</p>);
+            break;
+          case(1):
+            ret.push(<p key='Tuesday' className='mb-0'>Tuesday</p>);
+            break;
+          case(2):
+            ret.push(<p key='Wednesday' className='mb-0'>Wednesday</p>);
+            break;
+          case(3):
+            ret.push(<p key='Thursday' className='mb-0'>Thursday</p>);  
+            break;
+          case(4):
+            ret.push(<p key='Friday' className='mb-0'>Friday</p>);
+            break;
+          case(5):
+            ret.push(<p key='Saturday' className='mb-0'>Saturday</p>);
+            break;
+          case(6):
+            ret.push(<p key='Sunday' className='mb-0'>Sunday</p>);
+            break;
+        }
+        // ret.push(<p className='mb-0 d-inline'><small><strong>{`${dateObj[i].start} - ${dateObj[i].end}`}</strong></small></p>)
+        trackDay = dateObj[i].day;
+      }
+        ret.push(<p key={`${i}`} className='mb-0 d-inline'><small><strong>{`   ${dateObj[i].start} - ${dateObj[i].end}`}</strong></small></p>)
+      
+      
+    }
+    return ret;
+  }
+
+  
+  
+  genSidebarData = () => {
+    return(
+      <div>
+        <p className='header-detail mb-0'>Phone #</p>
+        <h6>{this.state.restaurant.display_phone ? this.state.restaurant.display_phone : "N/A"}</h6>
+        <p className='header-detail mb-0'>Hours</p>
+        
+        {
+          this.formatDate(this.state.restaurant.hours[0].open)
+          // this.state.restaurant.hours[0].open.map((x, index) => { 
+          //   if(typeof x !== 'undefined' && x.day === x.day + 1)
+          //     <p className='d-inline' key={index}> {`${x.start} -  ${x.end}`}</p>
+          //   else
+          //     <p key={index}> {`${x.start} -  ${x.end}`}</p>
+          // }
+          
+        }
+      </div>
+    );
+  }
+
   render() {
+    console.log('App.js render called');
     if(this.state.displayError){
       return(
         <div className="Content-wrapper">
@@ -73,6 +140,7 @@ class App extends Component {
         </div>
       );
     }else{
+      console.log('No display error');
       if(Object.entries(this.state.restaurant).length === 0 && this.state.restaurant.constructor === Object){ //if user hasn't typed anything
         return(
           <div className='Content-wrapper'>
@@ -86,7 +154,7 @@ class App extends Component {
           </div>
         );
       }else{ //everything went alright, display regular view
-        var userReviews = this.genUserReviews();
+        // console.log(this.state.restaurant);
         return(
           <div className='Content-wrapper'>
             <div className='wrap-center-top'>
@@ -95,13 +163,12 @@ class App extends Component {
             </div>
             <div className='wrap-center-entry'>
               <Entry getStars={this.getStars} restaurantData={this.state.restaurant}/>
-              
-            </div>
-            <div className='sidebar'>
-              <p>nice</p>
-            </div>
-            <div className='wrap-center-reviews'>
-              {userReviews}
+              <div className='sidebar'>
+                {this.genSidebarData()}
+              </div>
+              <div className='reviews'>
+                {this.genUserReviews()}
+              </div>
             </div>
             {/* <Footer/> */}
           </div>
