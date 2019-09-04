@@ -67,7 +67,7 @@ class SearchBar extends Component{
             fetch(fetchURI)
             .then(handleErrors)
             .then(data => { //data is json, 
-                console.log('passing in', data);
+                // console.log('passing in', data);
                 this.props.handleRestaurantData(data);
             }).catch(err => {
                 console.log(err);
