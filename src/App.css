@@ -1,5 +1,8 @@
 
-
+.Content-Wrapper{
+  width: 100%;
+  height:100%;
+}
 .header{
   text-align: center;
 }
@@ -34,9 +37,14 @@ footer{
   text-transform: uppercase;
 }
 .sidebar{
-  top: 500px;
+  top: 300px;
   position: absolute;
   height:500px;
+  background:lightgray;
+  /* border:solid; */
+  transform:translate(50%, 0);
+  left: 50%;
+  width: 25%;
 }
 .wrap-center{
     position: absolute;
@@ -44,8 +52,8 @@ footer{
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.wrap-center-reviews{
-  top:500px;
+.reviews{
+  top:300px;
   position:absolute;
   left: 50%;
   transform: translate(-75%, 0%);
