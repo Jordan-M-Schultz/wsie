@@ -5,10 +5,6 @@ import './Footer.css';
  
 
 class Footer extends Component{
-    constructor(props){
-        super(props);
-    }
-    
     render(){
         return(
             <footer className="page-footer font-small mdb-color pt-4">

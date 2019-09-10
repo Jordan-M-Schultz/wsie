@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import ReactDOM from 'react-dom';
 import './SearchBar.css';
 
 class SearchBar extends Component{
@@ -15,31 +14,26 @@ class SearchBar extends Component{
         }
         // this.handleChange = this.handleChange.bind(this); //this.handleChange is bound to this to call later
     }
+
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value});
     }
 
     // Update state based on filter options
     handleClick = (event, pos="") => {
-        if(pos !== ""){ //adjusting for price
-            let priceCP = [...this.state.price]; // create the copy of state array
-            
+        if(pos !== ""){ //price adjustment
+            let priceCP = [...this.state.price]; // create the copy of state array to update
             if(priceCP[pos-1] === "") //remember, position index starts at 1, have to shift left
                 priceCP[pos-1] = pos;
             else
                 priceCP[pos-1] = "";
             this.setState({price: priceCP}); 
-        }else{
-            // console.log(event.target.checked);
+        }else{ //adjusting state for other checkboxes
             this.setState({[event.target.name] : event.target.checked});
-            console.log(this.state.hotNew);
         }
         
     }
-
-
-    
-
+    //Fetch data upon button click
     handleSubmit = (event) => {
         if(!this.state.restaurantType || !this.state.location){
             this.setState({error:true});
@@ -66,35 +60,14 @@ class SearchBar extends Component{
             
             fetch(fetchURI)
             .then(handleErrors)
-            .then(data => { //data is json, 
-                // console.log('passing in', data);
-                this.props.handleRestaurantData(data);
-            }).catch(err => {
+            .then(data => this.props.handleRestaurantData(data))
+            .catch(err => { //output error page, component refresh
                 console.log(err);
                 this.props.handleRestaurantData(null);
-                //output false page here prob
             });
-
-            // fetch(fetchURI)
-            // .then(response => {
-            //     if(!response.ok){
-            //         console.log("Error");
-            //         throw Error(response.statusText);
-            //     }
-            //     return response.json()
-            // }) //result is response, convert to json
-            // .then(data => { //data is json, 
-            //     console.log('passing in', data);
-            //     if(data)
-            //         this.props.handleRestaurantData(data);
-            // }).catch(err => console.log(err));
         }
-        
         event.preventDefault();
     }
-
-    
-    
 
     render(){
         return(
