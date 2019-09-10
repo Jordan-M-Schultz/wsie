@@ -7,6 +7,8 @@ import Entry from './Entry';
 import Review from './Review';
 import Footer from './Footer';
 import starArray from './Entry/images'
+// import { isFulfilled } from 'q';
+// import { exportDefaultSpecifier } from '@babel/types';
 
 class App extends Component {
   constructor(props) {
@@ -33,6 +35,7 @@ class App extends Component {
     }
   } 
 
+  //insert graphic based on numerical value
   getStars = (rating) => {
     switch(parseFloat(rating)){
         case 0: 
@@ -59,67 +62,87 @@ class App extends Component {
             break;
     }
   }
+  
+  //Create user reviews
   genUserReviews = () => this.state.restaurant.reviews.map((x,index) => <Review key={`review${index}`} getStars={this.getStars} review={x}/>)
   
   formatDate = (dateObj) => {
     var ret = [];
-    var trackDay = 0;
-    var string = "";
+    var trackDay = -1;
+    var abbr = '';
     for(let i = 0 ; i < dateObj.length; i++){ //indicies will always be 0-6
-      
-      if(dateObj[i].day !== trackDay){ //if day is new
+      if(dateObj[i].day !== trackDay){ //if day has not been encountered
         switch(dateObj[i].day){
           case(0):
-            ret.push(<p key='Monday' className='mb-0'>Monday</p>);
+          abbr = 'Mon ';
             break;
           case(1):
-            ret.push(<p key='Tuesday' className='mb-0'>Tuesday</p>);
+          abbr = 'Tue ';
             break;
           case(2):
-            ret.push(<p key='Wednesday' className='mb-0'>Wednesday</p>);
+          abbr = 'Wed ';
             break;
           case(3):
-            ret.push(<p key='Thursday' className='mb-0'>Thursday</p>);  
+          abbr = 'Thu ';
             break;
           case(4):
-            ret.push(<p key='Friday' className='mb-0'>Friday</p>);
+          abbr = 'Fri ';
             break;
           case(5):
-            ret.push(<p key='Saturday' className='mb-0'>Saturday</p>);
+          abbr = 'Sat ';
             break;
           case(6):
-            ret.push(<p key='Sunday' className='mb-0'>Sunday</p>);
+          abbr = 'Sun ';
+            break;
+          default:
             break;
         }
-        // ret.push(<p className='mb-0 d-inline'><small><strong>{`${dateObj[i].start} - ${dateObj[i].end}`}</strong></small></p>)
+        abbr += `${this.translateTime(dateObj[i].start)} - ${this.translateTime(dateObj[i].end)}`;
+        if(dateObj[i+1]!== undefined && dateObj[i+1].day !== dateObj[i].day){
+          ret.push(<p key={`${i}`} className='mb-0'><small><strong>{`${abbr}`}</strong></small></p>);
+        }
         trackDay = dateObj[i].day;
+      }else{
+        abbr += `, ${this.translateTime(dateObj[i].start)} - ${this.translateTime(dateObj[i].end)}`;
+        ret.push(<p key={`${i}`} className='mb-0'><small><strong>{`${abbr}`}</strong></small></p>);
+        abbr = '';
       }
-        ret.push(<p key={`${i}`} className='mb-0 d-inline'><small><strong>{`   ${dateObj[i].start} - ${dateObj[i].end}`}</strong></small></p>)
-      
-      
+       
     }
     return ret;
   }
 
-  
+  //convert military time to standard time 
+  translateTime = (time) => {
+    //0000 to 2400
+    let hours = time.substr(0,2);
+    let minutes = time.substr(2,2);
+    let converted = '';
+    let abbr = '';
+    if(hours === 0 || hours === 24){
+      converted+=12;
+      abbr = 'am'
+    }else if(hours < 12){
+      converted += hours;
+      abbr = 'am';
+    }else{
+      converted += (parseInt(hours) - 12)
+      abbr = 'pm';
+    }
+    return converted + ':' + minutes + abbr;
+  }
   
   genSidebarData = () => {
+    const displayAddress = (this.state.restaurant.location.display_address)
+                .map((field, index) => <h6 key={index}>{field}</h6> );
     return(
       <div>
         <p className='header-detail mb-0'>Phone #</p>
         <h6>{this.state.restaurant.display_phone ? this.state.restaurant.display_phone : "N/A"}</h6>
         <p className='header-detail mb-0'>Hours</p>
-        
-        {
-          this.formatDate(this.state.restaurant.hours[0].open)
-          // this.state.restaurant.hours[0].open.map((x, index) => { 
-          //   if(typeof x !== 'undefined' && x.day === x.day + 1)
-          //     <p className='d-inline' key={index}> {`${x.start} -  ${x.end}`}</p>
-          //   else
-          //     <p key={index}> {`${x.start} -  ${x.end}`}</p>
-          // }
-          
-        }
+        {this.state.restaurant.hours ? this.formatDate(this.state.restaurant.hours[0].open) : "N/A"}
+        <br></br>
+        {displayAddress}
       </div>
     );
   }
@@ -154,7 +177,6 @@ class App extends Component {
           </div>
         );
       }else{ //everything went alright, display regular view
-        // console.log(this.state.restaurant);
         return(
           <div className='Content-wrapper'>
             <div className='wrap-center-top'>
@@ -170,7 +192,7 @@ class App extends Component {
                 {this.genUserReviews()}
               </div>
             </div>
-            {/* <Footer/> */}
+            <Footer/>
           </div>
         );
       }
