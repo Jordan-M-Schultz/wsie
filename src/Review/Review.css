@@ -15,4 +15,5 @@
 
 .review .row{
     height: 100%;
+    overflow: hidden;
 }
