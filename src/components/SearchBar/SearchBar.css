@@ -1,0 +1,43 @@
+.SearchBar{
+    height: 2em;
+    width: 40em;
+}
+.SearchBar button{
+    background-color: red;
+    width: 10%;
+    height:inherit;
+    display: inline;
+    color:white;
+    /* border-radius: 10px 0px 0px 10px; */
+}
+
+.SearchBar .filterBtn{
+    width: 35px;
+    border:none;
+}
+
+.SearchBar input{
+    /* width: 45%; */
+    display: inline;
+    height: inherit;
+    /* border-radius: 0px 10px 10px 0px; */
+    /* border-radius: 0 0 0 0; */
+
+}
+.SearchBar input:focus{
+    outline:none;
+}
+
+
+*:focus {
+    outline: none;
+}
+
+.error {
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+}
+
+#filter{
+    margin-top: 15px;
+}
