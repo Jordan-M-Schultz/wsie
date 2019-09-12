@@ -25,6 +25,14 @@ footer{
   transform: translate(-50%,-50%);
 }
 
+.map{
+  top:325px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-75%, 0%);
+  margin-right: 5px;
+}
+
 
 .header-detail{
   color: rgb(143, 143, 143);
@@ -49,7 +57,7 @@ footer{
     transform: translate(-50%, -50%);
 }
 .reviews{
-  top:320px;
+  top:650px;
   position:absolute;
   left: 50%;
   transform: translate(-75%, 0%);

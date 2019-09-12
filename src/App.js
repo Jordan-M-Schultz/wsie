@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import './App.css';
-import './SearchBar';
+import './components/SearchBar';
 
-import SearchBar from './SearchBar';
-import Entry from './Entry';
-import Review from './Review';
-import Footer from './Footer';
-import starArray from './Entry/images'
+import SearchBar from './components/SearchBar';
+import Entry from './components/Entry';
+import Review from './components/Review';
+import Footer from './components/Footer';
+import Map from './components/Map';
+import starArray from './components/Entry/images'
 // import { isFulfilled } from 'q';
 // import { exportDefaultSpecifier } from '@babel/types';
 
@@ -158,6 +159,7 @@ class App extends Component {
           <div className='wrap-center-entry'>
             <Entry getStars={this.getStars} restaurantData={null}/>
           </div>
+          <div></div>
           <div className='footer'>
           </div>
         </div>
@@ -190,6 +192,9 @@ class App extends Component {
               </div>
               <div className='reviews'>
                 {this.genUserReviews()}
+              </div>
+              <div className='map'>
+                <Map address={this.state.restaurant.location}/>
               </div>
             </div>
             <Footer/>
