@@ -12,14 +12,21 @@ class SearchBar extends Component{
             error: false,
             hotNew: false
         }
-        // this.handleChange = this.handleChange.bind(this); //this.handleChange is bound to this to call later
     }
 
+    /*
+        Update state based on search bar value
+        event: restaurantType(String) || location(String)
+    */
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    // Update state based on filter options
+    /* 
+        Update state based on filter options
+        event: price(String[]) || openNow(Bool) || hotNew(Bool)
+        pos: [1,4], used to set price array in accordance with yelp api (1,3)
+    */
     handleClick = (event, pos="") => {
         if(pos !== ""){ //price adjustment
             let priceCP = [...this.state.price]; // create the copy of state array to update
